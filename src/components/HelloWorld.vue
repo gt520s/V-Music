@@ -6,9 +6,7 @@
       <li>
         <a
           href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs 文档  问啊d
+          target="_blank">
           Core Docs?
         </a>
       </li>
