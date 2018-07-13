@@ -1,10 +1,10 @@
 <template>
 <div class="recommend">
   <div class="recommend-content">
-    <div v-if="recommends.length" class="slider-warpper">
+    <div v-if="slider.length" class="slider-warpper">
       <Slider>
-        <div v-for="item in recommends" v-bind:key="item.id" >
-          <a :href="item.linkUrl">
+        <div v-for="item in slider" :key="item.id" >
+          <a>
             <img :src="item.picUrl" alt="">
           </a>
         </div>
@@ -13,6 +13,14 @@
     <div class="recommend-list">
       <h1 class="list-title">热门歌单推荐</h1>
       <ul>
+        <li v-for="item in songList" :key="item.id" class="item">
+          <div class="icon">
+            <img width="60" height="60" :src="item.picUrl">
+          </div>
+          <div class="text">
+            <p class="desc">{{item.songListDesc}}</p>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -20,14 +28,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {getRecommend} from 'api/recommend'
+import {getData} from 'api/recommend'
 import {ERR_OK} from 'api/config'
 import Slider from 'base/slider/slider'
 
 export default {
   data () {
     return {
-      recommends: []
+      slider: [],
+      radioList: [],
+      songList: []
     }
   },
   created () {
@@ -35,10 +45,12 @@ export default {
   },
   methods: {
     _getRecommend () {
-      getRecommend().then(res => {
+      getData().then(res => {
         if (res.code === ERR_OK) {
-          this.recommends = res.data.slider
-          console.log(res.data.slider)
+          this.slider = res.data.slider
+          this.radioList = res.data.radioList
+          this.songList = res.data.songList
+          console.log(this.songList)
         }
       })
     }
@@ -72,27 +84,7 @@ export default {
           font-size: $font-size-medium
           color: $color-theme
         .item
-          display: flex
-          box-sizing: border-box
-          align-items: center
-          padding: 0 20px 20px 20px
-          .icon
-            flex: 0 0 60px
-            width: 60px
-            padding-right: 20px
-          .text
-            display: flex
-            flex-direction: column
-            justify-content: center
-            flex: 1
-            line-height: 20px
-            overflow: hidden
-            font-size: $font-size-medium
-            .name
-              margin-bottom: 10px
-              color: $color-text
-            .desc
-              color: $color-text-d
+          display:flex
       .loading-container
         position: absolute
         width: 100%
