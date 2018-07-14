@@ -1,28 +1,32 @@
 <template>
 <div class="recommend">
   <div class="recommend-content">
-    <div v-if="slider.length" class="slider-warpper">
-      <Slider>
-        <div v-for="item in slider" :key="item.id" >
-          <a>
-            <img :src="item.picUrl" alt="">
-          </a>
-        </div>
-      </Slider>
-    </div>
-    <div class="recommend-list">
-      <h1 class="list-title">热门歌单推荐</h1>
-      <ul>
-        <li v-for="item in songList" :key="item.id" class="item">
-          <div class="icon">
-            <img width="60" height="60" :src="item.picUrl">
+    <div>
+      <div v-if="slider.length" class="slider-warpper">
+        <Slider>
+          <div v-for="item in slider" :key="item.id" >
+            <a>
+              <img :src="item.picUrl" alt="">
+            </a>
           </div>
-          <div class="text">
-            <p class="desc">{{item.songListDesc}}</p>
-          </div>
-        </li>
-      </ul>
+        </Slider>
+      </div>
+      <div class="recommend-list">
+        <h1 class="list-title">热门歌单推荐</h1>
+        <ul class="item-warpper">
+          <li v-for="item in songList" :key="item.id" class="item">
+            <div class="icon">
+              <img :src="item.picUrl">
+            </div>
+            <div class="text">
+              <p class="desc">{{item.songListDesc}}</p>
+              <p class="author">{{item.songListAuthor}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+
   </div>
 </div>
 </template>
@@ -83,8 +87,28 @@ export default {
           text-align: center
           font-size: $font-size-medium
           color: $color-theme
-        .item
+        .item-warpper
           display:flex
+          flex-flow:row wrap
+          .item
+            display:inline-block
+            width:48%
+            padding:1%
+            font-size:0
+            .icon img
+              width:100%
+              height:100%
+            .text
+              padding:5px
+              background:#000
+              .desc
+                font-size:$font-size-medium
+                color:$color-text-ll
+                line-height:18px
+                padding-bottom:5px
+              .author
+                font-size:$font-size-small
+                color:$color-text-l
       .loading-container
         position: absolute
         width: 100%
